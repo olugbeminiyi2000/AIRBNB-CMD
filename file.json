@@ -1,1 +1,1 @@
-{}
+{"BaseModel.97902760-4820-4435-9576-9e03fcd79259": {"id": "97902760-4820-4435-9576-9e03fcd79259", "created_at": "2024-01-11T18:28:35.748311", "updated_at": "2024-01-11T18:28:35.748335", "__class__": "BaseModel"}, "User.8d432a17-114d-4c27-9257-0640084c8f61": {"email": "airbnb@gmail.com", "password": "root", "first_name": "Emmanuel", "last_name": "Obolo", "id": "8d432a17-114d-4c27-9257-0640084c8f61", "created_at": "2024-01-11T18:32:05.851434", "updated_at": "2024-01-11T18:32:05.851451", "__class__": "User"}}

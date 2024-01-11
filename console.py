@@ -3,6 +3,7 @@
 if __name__ == "__main__":
   from datetime import datetime
   from models.base_model import BaseModel
+  from models.user import User
   from models import storage
   import ast
   import cmd
@@ -10,6 +11,9 @@ if __name__ == "__main__":
   import sys
 
   class HBNBCommand(cmd.Cmd):
+    HBNBClasses = [
+        "BaseModel", "User", "State", "City", "Amenity", "Place", "Review"
+    ]
     prompt = "(hbnb) "
 
     def do_update(self, args):
@@ -17,7 +21,7 @@ if __name__ == "__main__":
       if len(list_args) < 1:
         print("** class name missing **")
       else:
-        if list_args[0] == "BaseModel":
+        if list_args[0] in self.HBNBClasses:
           if len(list_args) > 1:
             key = f"{list_args[0]}.{list_args[1]}"
             storage.reload()
@@ -70,7 +74,7 @@ if __name__ == "__main__":
       if arg == "":
         print("** class name missing **")
       else:
-        if arg == "BaseModel":
+        if arg in self.HBNBClasses:
           storage.reload()
           display_all_list = []
           temp_show_dict = copy.deepcopy(storage.all())
@@ -97,6 +101,11 @@ if __name__ == "__main__":
           model.save()
           print(model.id)
           storage.reload()
+        elif arg == "User":
+          model = User()
+          model.save()
+          print(model.id)
+          storage.reload()
         else:
           print("** class doesn't exist **")
 
@@ -109,7 +118,7 @@ if __name__ == "__main__":
       if len(list_args) < 1:
         print("** class name missing **")
       else:
-        if list_args[0] == "BaseModel":
+        if list_args[0] in self.HBNBClasses:
           if len(list_args) > 1:
             key = f"{list_args[0]}.{list_args[1]}"
             storage.reload()
@@ -133,7 +142,7 @@ if __name__ == "__main__":
       if len(list_args) < 1:
         print("** class name missing **")
       else:
-        if list_args[0] == "BaseModel":
+        if list_args[0] in self.HBNBClasses:
           if len(list_args) > 1:
             key = f"{list_args[0]}.{list_args[1]}"
             storage.reload()
