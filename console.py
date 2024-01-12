@@ -4,6 +4,11 @@ if __name__ == "__main__":
   from datetime import datetime
   from models.base_model import BaseModel
   from models.user import User
+  from models.state import State
+  from models.city import City
+  from models.amenity import Amenity
+  from models.place import Place
+  from models.review import Review
   from models import storage
   import ast
   import cmd
@@ -17,6 +22,21 @@ if __name__ == "__main__":
     prompt = "(hbnb) "
 
     def do_update(self, args):
+      """
+      Updates an instance based on the class name and id 
+      by adding or updating attribute (save the change into the JSON file).
+      Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
+
+      Usage: update <class name> <id> <attribute name> "<attribute value>"
+      Only one attribute can be updated at the time!!!
+      You can assume the attribute name is valid (exists for this model)
+      The attribute value must be casted to the attribute type!!!
+
+      id, created_at and updated_at cant’ be updated.
+      You can assume they won’t be passed in the update command
+      Only “simple” arguments can be updated: string, integer and float.
+      You can assume nobody will try to update list of ids or datetime.
+      """
       list_args = args.split()
       if len(list_args) < 1:
         print("** class name missing **")
@@ -71,10 +91,15 @@ if __name__ == "__main__":
           print("** class doesn't exist **")
 
     def do_all(self, arg):
+      """
+      Prints all string representation of all instances
+      based or not on the class name.
+      Ex: $ all BaseModel or $ all.
+      """
       if arg == "":
         print("** class name missing **")
       else:
-        if arg in self.HBNBClasses:
+        if arg in self.HBNBClasses or arg == ".":
           storage.reload()
           display_all_list = []
           temp_show_dict = copy.deepcopy(storage.all())
@@ -92,6 +117,7 @@ if __name__ == "__main__":
       """
       Creates a new instance of BaseModel, 
       saves it (to the JSON file) and prints the id
+      Ex: $ create BaseModel
       """
       if arg == "":
         print("** class name missing **")
@@ -106,13 +132,39 @@ if __name__ == "__main__":
           model.save()
           print(model.id)
           storage.reload()
+        elif arg == "State":
+          model = State()
+          model.save()
+          print(model.id)
+          storage.reload()
+        elif arg == "City":
+          model = City()
+          model.save()
+          print(model.id)
+          storage.reload()
+        elif arg == "Amenity":
+          model = Amenity()
+          model.save()
+          print(model.id)
+          storage.reload()
+        elif arg == "Place":
+          model = Place()
+          model.save()
+          print(model.id)
+          storage.reload()
+        elif arg == "Review":
+          model = Review()
+          model.save()
+          print(model.id)
+          storage.reload()
         else:
           print("** class doesn't exist **")
 
     def do_destroy(self, args):
       """
       Deletes an instance based on the class name
-      and id (save the change into the JSON file). 
+      and id (save the change into the JSON file).
+      Ex: $ destroy BaseModel 1234-1234-1234.
       """
       list_args = args.split()
       if len(list_args) < 1:
@@ -137,6 +189,7 @@ if __name__ == "__main__":
       """
       Prints the string representation of an 
       instance based on the class name and id
+      Ex: $ show BaseModel 1234-1234-1234.
       """
       list_args = args.split()
       if len(list_args) < 1:
