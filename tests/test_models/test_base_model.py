@@ -1,15 +1,23 @@
 from datetime import datetime
 from models.base_model import BaseModel
+from models import storage
 import unittest
 import uuid
+import json
 
 
 class TestBaseModel(unittest.TestCase):
 
   def test_string_method(self):
     obj1 = BaseModel()
+    obj1.save()
+    storage.reload()
     obj2 = BaseModel()
+    obj2.save()
+    storage.reload()
     obj3 = BaseModel()
+    obj3.save()
+    storage.reload()
     self.assertEqual(obj1.__str__(),
                      f"[{type(obj1).__name__}] ({obj1.id}) {obj1.__dict__}")
     self.assertEqual(obj2.__str__(),
@@ -19,14 +27,20 @@ class TestBaseModel(unittest.TestCase):
 
   def test_save_method(self):
     obj1 = BaseModel()
-    obj2 = BaseModel()
-    obj3 = BaseModel()
     before_save1 = obj1.updated_at
-    before_save2 = obj2.updated_at
-    before_save3 = obj3.updated_at
     obj1.save()
+    print(obj1.id)
+    storage.reload()
+    obj2 = BaseModel()
+    before_save2 = obj2.updated_at
     obj2.save()
+    print(obj2.id)
+    storage.reload()
+    obj3 = BaseModel()
+    before_save3 = obj3.updated_at
     obj3.save()
+    print(obj3.id)
+    storage.reload()
     after_save1 = obj1.updated_at
     after_save2 = obj2.updated_at
     after_save3 = obj3.updated_at
@@ -42,8 +56,13 @@ class TestBaseModel(unittest.TestCase):
 
   def test_isformat_method(self):
     obj1 = BaseModel()
+    obj1.save()
+    storage.reload()
     obj2 = BaseModel()
+    obj2.save()
     obj3 = BaseModel()
+    obj3.save()
+    storage.reload()
     obj1_dict = obj1.to_dict()
     obj2_dict = obj2.to_dict()
     obj3_dict = obj3.to_dict()
@@ -56,15 +75,25 @@ class TestBaseModel(unittest.TestCase):
 
   def test_isinstance(self):
     self.obj1 = BaseModel()
+    self.obj1.save()
+    storage.reload()
     self.obj2 = BaseModel()
+    self.obj2.save()
+    storage.reload()
     self.obj3 = BaseModel()
+    self.obj3.save()
+    storage.reload()
     self.assertIsInstance(self.obj1, BaseModel)
     self.assertIsInstance(self.obj2, BaseModel)
     self.assertIsInstance(self.obj3, BaseModel)
 
   def test_initialization_attributes_without_args_kwargs(self):
     self.obj4 = BaseModel()
+    self.obj4.save()
+    storage.reload()
     self.obj5 = BaseModel()
+    self.obj5.save()
+    storage.reload()
     self.assertIsInstance(self.obj4.id, str)
     self.assertIsInstance(self.obj5.id, str)
     self.assertIsInstance(self.obj4.created_at, datetime)
@@ -77,8 +106,12 @@ class TestBaseModel(unittest.TestCase):
   def test_initialization_attributes_with_args_only(self):
     args_1 = (str(uuid.uuid4()), datetime.now(), datetime.now())
     obj1 = BaseModel(*args_1)
+    obj1.save()
+    storage.reload()
     args_2 = (str(uuid.uuid4()), datetime.now(), datetime.now())
     obj2 = BaseModel(*args_2)
+    obj2.save()
+    storage.reload()
     self.assertNotEqual(obj1.id, args_1[0])
     self.assertNotEqual(obj2.id, args_2[0])
     self.assertNotEqual(obj1.created_at, args_1[1])
@@ -96,8 +129,12 @@ class TestBaseModel(unittest.TestCase):
 
   def test_initialization_attributes_with_kwargs_only(self):
     my_model = BaseModel()
+    my_model.save()
+    storage.reload()
     my_model_json = my_model.to_dict()
     my_new_model = BaseModel(**my_model_json)
+    my_new_model.save()
+    storage.reload()
     self.assertIsInstance(my_new_model.id, str)
     self.assertIsInstance(my_new_model.created_at, datetime)
     self.assertIsInstance(my_new_model.updated_at, datetime)
@@ -108,10 +145,16 @@ class TestBaseModel(unittest.TestCase):
 
   def test_dict_method(self):
     obj1 = BaseModel()
+    obj1.save()
+    storage.reload()
     obj1_new_dict = obj1.to_dict()
     obj2 = BaseModel()
+    obj2.save()
+    storage.reload()
     obj2_new_dict = obj2.to_dict()
     obj3 = BaseModel()
+    obj3.save()
+    storage.reload()
     obj3_new_dict = obj3.to_dict()
     self.assertDictEqual(obj1_new_dict, obj1.__dict__)
     self.assertDictEqual(obj2_new_dict, obj2.__dict__)
