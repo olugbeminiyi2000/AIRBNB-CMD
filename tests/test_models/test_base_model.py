@@ -29,17 +29,14 @@ class TestBaseModel(unittest.TestCase):
     obj1 = BaseModel()
     before_save1 = obj1.updated_at
     obj1.save()
-    print(obj1.id)
     storage.reload()
     obj2 = BaseModel()
     before_save2 = obj2.updated_at
     obj2.save()
-    print(obj2.id)
     storage.reload()
     obj3 = BaseModel()
     before_save3 = obj3.updated_at
     obj3.save()
-    print(obj3.id)
     storage.reload()
     after_save1 = obj1.updated_at
     after_save2 = obj2.updated_at
